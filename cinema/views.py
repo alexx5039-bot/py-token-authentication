@@ -45,7 +45,7 @@ class CinemaHallViewSet(NoDetailMixin, viewsets.ModelViewSet):
 class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.prefetch_related("genres", "actors")
     serializer_class = MovieSerializer
-    permission_classes = (IsAuthenticated, IsAdminOrIfAuthenticatedReadOnly)
+    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
     http_method_names = ["get", "post"]
 
     @staticmethod
@@ -95,7 +95,7 @@ class MovieSessionViewSet(viewsets.ModelViewSet):
         )
     )
     serializer_class = MovieSessionSerializer
-    permission_classes = (IsAuthenticated, IsAdminOrIfAuthenticatedReadOnly,)
+    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
     def get_queryset(self):
         date = self.request.query_params.get("date")
@@ -134,7 +134,6 @@ class OrderViewSet(NoDetailMixin, viewsets.ModelViewSet):
     serializer_class = OrderSerializer
     pagination_class = OrderPagination
     permission_classes = (IsAuthenticated,)
-    http_method_names = ["get", "post", "put", "patch", "delete"]
 
     def get_queryset(self):
         return super().get_queryset().filter(user=self.request.user)
