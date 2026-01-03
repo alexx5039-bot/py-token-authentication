@@ -13,3 +13,5 @@ class NoDetailMixin:
 
     def destroy(self, *args, **kwargs):
         raise Http404
+
+# noqa
